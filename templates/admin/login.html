@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Vacker360! | </title>
+    {% load staticfiles %}
+    {% load i18n static %}
+    {% block css %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}" >
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'vendors/font-awesome/css/font-awesome.min.css' %}" >
+    <!-- NProgress -->
+    <link rel="stylesheet" href="{% static 'vendors/nprogress/nprogress.css' %}" >
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{% static 'vendors/animate.css/animate.min.css' %}">
+    <!-- Custom Theme Style -->
+    <link rel="stylesheet" href="{% static 'admin/css/custom.min.css' %}">
+    {% endblock %}
+
+  </head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            {% if user.is_authenticated %}
+                    <p class="errornote">
+                    {% blocktrans trimmed %}
+                        You are authenticated as {{ username }}, but are not authorized to
+                        access this page. Would you like to login to a different account?
+                    {% endblocktrans %}
+                    </p>
+                    {% endif %}
+
+                    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+                        <h1>Login Form</h1>
+                      <div class="form-row">
+                        {{ form.username.errors }}
+                        {{ form.username.label_tag }} {{ form.username }}
+                      </div>
+                      <div class="form-row">
+                        {{ form.password.errors }}
+                        {{ form.password.label_tag }} {{ form.password }}
+                        <input type="hidden" name="next" value="{{ next }}" />
+                      </div>
+                      {% url 'admin_password_reset' as password_reset_url %}
+                      {% if password_reset_url %}
+                      <div class="reset_pass">
+                        <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+                      </div>
+                      {% endif %}
+
+                        <label>&nbsp;</label><input type="submit" class="btn btn-default submit" value="{% trans 'Log in' %}" style="margin-left: 40%"/><br />
+
+                       <div class="clearfix"></div>
+
+              <div class="separator">
+                <div>
+                <!-- <a class="btn btn-default submit" href="/360admin/">Log in</a> -->
+                  <a class="" href="#">Lost your password?</a>
+                </div>
+                <p class="change_link">New to site?
+                  <a href="#signup" class="to_register"> Create Account </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class=""></i> Vacker360!</h1>
+                  <p>©2016 All Rights Reserved. powered by Vacker360</p>
+                </div>
+              </div>
+                    </form>
+
+          </section>
+        </div>
+
+        <div id="register" class="animate form registration_form">
+          <section class="login_content">
+            <form>
+              <h1>Create Account</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="Username" required="required" />
+              </div>
+              <div>
+                <input type="email" class="form-control" placeholder="Email" required="required" />
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Password" required="required" />
+              </div>
+              <div>
+                <a class="btn btn-default submit" href="/360admin/accounts/login">Submit</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">Already a member ?
+                  <a href="#signin" class="to_register"> Log in </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class=""></i> Vacker360!</h1>
+                  <p>©2018 All Rights Reserved. Powered by Vacker360</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

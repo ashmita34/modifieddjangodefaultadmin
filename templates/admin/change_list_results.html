@@ -1,0 +1,103 @@
+
+{% load i18n admin_urls static admin_list %}
+
+
+
+
+
+
+{% block content %}
+
+ 
+    
+
+                
+                   <!--  <div><a class="btn btn-default buttons-html5 btn-md" tabindex="0" aria-controls="datatable-buttons" href="/360admin/restaurant/user_form"><i class="fa fa-plus"></i> <span> ADD USER </span></a></div>
+                    <div class="clearfix"></div>
+                    <br /> -->
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+<tr>
+{% for header in result_headers %}
+<th scope="col" {{ header.class_attrib }}>
+   {% if header.sortable %}
+     {% if header.sort_priority > 0 %}
+       <div class="sortoptions">
+         <a class="sortremove" href="{{ header.url_remove }}" title="{% trans "Remove from sorting" %}"></a>
+         {% if num_sorted_fields > 1 %}<span class="sortpriority" title="{% blocktrans with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktrans %}">{{ header.sort_priority }}</span>{% endif %}
+         <a href="{{ header.url_toggle }}" class="toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% trans "Toggle sorting" %}"></a>
+       </div>
+     {% endif %}
+   {% endif %}
+   <div class="text">{% if header.sortable %}<a href="{{ header.url_primary }}">{{ header.text|capfirst }}</a>{% else %}<span>{{ header.text|capfirst }}</span>{% endif %}</div>
+   <div class="clear"></div>
+</th>{% endfor %}
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+  <!-- {{ cl.result_list }}
+  {% for object in cl.result_list %}
+ {{ object.first_name }}
+{% endfor %} -->
+
+
+
+    <tr><td colspan="{{ result|length }}">{{ result.form.non_field_errors }}</td></tr>
+
+{% for result in results %}
+
+<tr class="{% cycle 'row1' 'row2' %}">
+  {% for item in result %}{{ item }}{% endfor %}
+  </tr>
+{% endfor %}
+  
+   
+
+
+<!-- {% for object in cl.result_list %}
+
+
+ <td> <a href="/360admin/auth/user/{{object.id}}"><button><i class="fa fa-edit"></i></button></a><button class="red" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-close"></i></button></td>
+ 
+
+
+{% endfor %} -->
+
+
+  
+<!-- {% for result in results %}
+
+{% if result.form.non_field_errors %}
+    <tr><td colspan="{{ result|length }}">{{ result.form.non_field_errors }}</td></tr>
+{% endif %}
+<tr class="{% cycle 'row1' 'row2' %}">{% for item in result %}{{ item }}{% endfor %}
+  
+   
+
+
+
+ <td> <a href="/360admin/admin/user_form"><button><i class="fa fa-edit"></i></button></a><button class="red" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-close"></i></button></td>
+ 
+
+</tr>
+
+{% endfor %} -->
+</tbody>
+                    </table>   
+                      <!--  {% if has_change_permission %}
+              <div class="x_content">
+          
+              {% url cl.opts|admin_urlname:'add' as add_url %}
+              <a href="{% add_preserved_filters add_url is_popup to_field %}" class="btn btn-default buttons-html5 btn-md" tabindex="0" aria-controls="datatable-buttons" >
+                {% blocktrans with cl.opts.verbose_name as name %}change {{ name }}{% endblocktrans %}
+              </a>
+           
+             </div>
+            {% endif %} -->
+  
+                  
+
+ 
+{% endblock %}
+

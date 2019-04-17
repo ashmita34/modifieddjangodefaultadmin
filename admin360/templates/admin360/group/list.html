@@ -1,0 +1,53 @@
+        {% extends "admin/base.html"%}
+        {% load i18n admin_urls static admin_list %}
+         {% block extrahead %}
+    {{ block.super }}
+    {{ media }}
+    <script type="text/javascript" src="{% static 'admin/js/cancel.js' %}"></script>
+{% endblock %}
+
+        {% block content %}
+        <!-- page content -->
+                  <div class="x_title">
+                    <h2>Groups</h2>
+                    <!--Removed ul-->
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <div><a class="btn btn-default buttons-html5 btn-md" tabindex="0" aria-controls="datatable-buttons" href="/360admin/auth/group/add"><i class="fa fa-plus"></i> <span> Add Group </span></a></div>
+                    <!-- <div class="dt-buttons btn-group">
+                      <a class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a>
+                      <a class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a>
+                      <a class="btn btn-default buttons-print btn-sm" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a>
+                    </div> -->
+                    <div class="clearfix"></div>
+                    <br />
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>SN</th>
+                          <th>Group</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for object in cl.result_list %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{object}}</td>
+                          <td>
+                            <a href="/360admin/auth/group/{{object.id}}" class="float-left"><button><i class="fa fa-edit"></i>&nbsp;</button></a>
+                            {% if has_delete_permission %}
+                            <form id='delete' class="float-left" method="POST" action="{% url opts|admin_urlname:'delete' object.pk %}">
+                              {% csrf_token %}
+                              <a href="{% url opts|admin_urlname:'delete' object.pk %}">
+                              <button class="deletelink red">&nbsp;<i class="fa fa-close"></i>&nbsp;</button></a>
+                            </form>
+                            {% endif %}
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                </div>
+        {% endblock %}

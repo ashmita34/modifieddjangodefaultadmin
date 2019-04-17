@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+
+
+
+{% block content %}
+
+<!-- <div class="right_col" role="main"> -->
+        {% if app_list %}
+          {% for app in app_list %}
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel fixed_height_320">
+              <div class="x_title">
+                <caption>
+                  <a href="{{ app.app_url }}" class="section" title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">{{ app.name }}</a>
+                </caption>
+              </div>
+              <div class="x_content">
+                {% for model in app.models %}
+                <table id="datatable" class="table table-striped table-bordered">
+                  <tr class="">
+                    {% if model.admin_url %}
+                    <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                    {% else %}
+                    <th scope="row">{{ model.name }}</th>
+                    {% endif %}
+
+                    {% if model.add_url %}
+                    <td><a href="{{ model.add_url }}" class="addlink">{% trans 'Add' %}</a></td>
+                    {% else %}
+                    <td>&nbsp;</td>
+                    {% endif %}
+
+                    {% if model.admin_url %}
+                    <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+                    {% else %}
+                    <td>&nbsp;</td>
+                    {% endif %}
+                  </tr>
+                </table>
+                {% endfor %}
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+        <p>{% trans "You don't have permission to edit anything." %}</p>
+        {% endif %}
+{% endblock %}
